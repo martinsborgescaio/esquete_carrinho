@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquete de Disponibilidade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Escolha os dias disponíveis</h2>
+    <form id="availabilityForm">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="days">Dias disponíveis:</label><br>
+        <input type="checkbox" id="monday" name="days" value="Segunda">
+        <label for="monday"> Segunda</label><br>
+        <input type="checkbox" id="tuesday" name="days" value="Terça">
+        <label for="tuesday"> Terça</label><br>
+        <input type="checkbox" id="wednesday" name="days" value="Quarta">
+        <label for="wednesday"> Quarta</label><br>
+        <input type="checkbox" id="thursday" name="days" value="Quinta">
+        <label for="thursday"> Quinta</label><br>
+        <input type="checkbox" id="friday" name="days" value="Sexta">
+        <label for="friday"> Sexta</label><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+    <script>
+        document.getElementById('availabilityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const days = Array.from(document.querySelectorAll('input[name="days"]:checked')).map(el => el.value);
+            const data = { name, days };
+            fetch('https://your-backend-url/submit', { // substitua 'https://your-backend-url/submit' com a URL do seu backend
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(response => response.json()).then(data => {
+                alert('Resposta enviada com sucesso!');
+            }).catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+    </script>
+</body>
+</html>
